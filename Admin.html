@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+body {
+  background-color: #00A4CCFF;
+  color :white;
+  font-family: Roboto;
+  border-collapse: collapse;
+  
+  } 
+
+  input {
+    background-color: #f2bc94;
+  }
+
+
+  button{
+    background-color: #f2bc94;
+    margin-top: 10px
+  }
+</style>  
+<body>
+        
+<div>
+    <h3>Admin</h3> 
+    <p>Username:</p>
+    <br>
+    <input type="text" id="uname" name="username" placeHolder="Please Input your username" value=""> 
+    <br>
+    <p>Password:</p>
+    <input type="password" id="pwd" name="password" placeholder="Please Input Your password" value="">
+    <br>
+    <button onclick="printAdmin()">Submit</button>
+</div>
+               
+            
+
+    
+</body>
+
+<script>
+class dataAdmin{
+constructor(username, password){
+    this.username = username,
+    this.password = password
+}
+}
+
+var data =[
+{
+    username: 'admin',
+    password: '4321',
+},
+]
+
+
+function printAdmin(){
+    var uname = document.getElementById("uname").value
+    var pwd = document.getElementById("pwd").value
+    for(i = 0; i < data.length; i++){
+    if(uname === data[i].username && pwd === data[i].password){
+        alert('Success')
+        return window.location.href = "printForAdmin.html"
+    } else {
+        alert('Incorrect your username or password')
+        return window.location.href = "Admin.html"
+    }
+   }
+}
+
+
+
+</script>
+</html>

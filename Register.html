@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+  body {
+  background-color: #00A4CCFF;
+  color :white;
+  font-family: Roboto;
+    
+  }
+  button {
+  background-color: #f2bc94;
+  color:#143d59;
+  margin-bottom: 15px;
+  width : 150px;
+  height: 25px;
+  margin-top: 10px
+  }
+
+  input {
+  background-color: #f2bc94;
+  color:#143d59;
+  margin-bottom: 15px;
+  width : 150px;
+  height: 25px;
+  margin-top: 10px
+  }
+
+  
+
+ 
+</style>
+
+<center>
+
+<h3>Register</h3> 
+<p>Username:</p>
+<br>
+<input type="text" id="uname" name="username" placeHolder="Please Input your username" value=""> 
+<br>
+<p>Password:</p>
+<input type="password" id="pwd" name="password" placeholder="Please Input Your password" value="">
+<br>
+<button value="submit" onclick="registerSubmit()">Submit</button>
+
+<p>Already have an account? <a href="Login.html">Sign in</a>.</p>
+</center>
+
+</body>
+
+
+<script>
+
+var users = []
+var uname = document.getElementById('uname')
+var pwd = document.getElementById('pwd')
+
+if (localStorage.getItem('accounts')) {
+        users = JSON.parse(localStorage.getItem('accounts'))
+}
+
+function registerSubmit(){
+        users.push({
+                username: uname.value,
+                password: pwd.value
+        });
+        var localStore = JSON.stringify(users)
+        localStorage.setItem('accounts', localStore)
+        window.location.href = "Login.html"
+}
+
+
+</script>
+
+</html>

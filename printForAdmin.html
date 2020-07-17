@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+body {
+    background-color: #00A4CCFF;
+    color :white;
+    font-family: Roboto;
+    border-collapse: collapse;
+    
+    } 
+table, th, td {
+    background-color: coral;
+    border : 5px solid #00A4CCFF;
+    text-align: center;
+    
+}
+
+input {
+background-color: #f2bc94;
+color:#143d59;
+margin-bottom: 15px;
+width : 150px;
+height: 25px;
+
+}
+</style>
+<body>
+        </center>
+        <center>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>Name</td>
+                            <td>Image</td>
+                            <td>Price</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    <tbody id="menu">
+        
+                    </tbody>
+                </table>
+            </center>
+            <center>
+                <input type="button" onclick="logOut()" value="Log Out">
+            </center>
+</body>
+<script>
+    class Product{
+        constructor(name, image, price){
+            this.name = name,
+            this.image = image,
+            this.price = price
+        }
+    }
+
+    var menu = [
+    new Product('table', 'https://i.pinimg.com/564x/6f/74/b9/6f74b98048b9980d4403faff47cf20ce.jpg', 2500000),
+         new Product('chair', 'https://i.pinimg.com/564x/fa/98/25/fa98255931681887d9194cc68d8fc00d.jpg', 2000000),
+         new Product('sofa', 'https://i.pinimg.com/564x/63/66/37/636637031868114d965a5b203e0317af.jpg', 3000000)
+    ]
+
+
+    
+    
+    var cart = []
+
+    
+
+    
+    
+
+    
+    
+
+    function printMenuAdmin(){
+        var output = ''
+        for(var i = 0 ; i< menu.length ; i++){
+            output += 
+            `
+            <tr>
+                <td>${i +1}</td>
+                <td>${menu[i].name}</td>
+                <td><img src=${menu[i].image} alt=${menu[i].name} width="100px"></td>
+                <td>Rp. ${menu[i].price.toLocaleString()}</td>
+                <td>
+                    <input type="button" value="Edit" onClick="editProduct(${i})"> 
+                    <br>       
+                    <input type="button" value="Delete" onClick="deleteProduct(${i})">
+                </td>
+            </tr>
+            `
+        }
+        return document.getElementById('menu').innerHTML = output +
+        `
+            <tr>
+                <td></td>    
+                <td><input type="text" id="newName" placeholder="Input new product"></td>    
+                <td><input type="text" id="newURL" placeholder="image" ></td>    
+                <td><input type="number" id="newPrice" placeholder="Input price of new product"></td>    
+                <td><input type="button" value="Add Product" onclick="addNewProduct()"></td>    
+            </tr>
+        `
+    }
+
+    function editProduct(index){
+        document.getElementById("menu").rows[index].innerHTML = `
+                <td></td>    
+                <td><input type="text" id="editName" placeholder="Input new product"></td>    
+                <td><input type="text" id="editUrl" placeholder="image" ></td>    
+                <td><input type="number" id="editPrice" placeholder="Input price of new product"></td>    
+                <td><input type="button" value="Confirm" onclick="confirmProduct(${index})"></td>   
+                <td><input type="button" value="Cancel" onclick="printMenuAdmin()"></td>    
+        `
+    
+    } 
+
+    function deleteProduct(index){
+        menu.splice(index, 1)
+        printMenuAdmin()
+    }
+
+    function addNewProduct(){
+        var newName = document.getElementById('newName').value;
+        console.log(newName)
+        var newURL = document.getElementById('newURL');
+        console.log(newURL)
+        var newPrice = document.getElementById('newPrice').value;
+        if(newName === '' || newURL === '' || newPrice === ''){
+            return alert('Please Input the product')
+        }else{
+            menu.push(new Product(newName, newURL, newPrice))
+            printMenuAdmin()
+        }
+    }
+
+    
+
+    function confirmProduct(index){
+        var newName = document.getElementById("editName").value
+        var newImg = document.getElementById("editUrl").value
+        var newPrice = document.getElementById("editPrice").value
+
+
+        if(newName === ''){
+            newName = menu[index].name
+        }
+        if(newImg === ''){
+            newImg = menu[index].image
+        }
+        if(newPrice === ''){
+            newPrice = menu[index].price.toLocaleString()
+        }else if(newPrice>0){
+            parseInt(newPrice)
+        }
+        console.log(newPrice)
+        menu[index].name = newName
+        menu[index].image = newImg
+        menu[index].price = newPrice
+        printMenuAdmin()
+    }    
+
+    function logOut(){
+       return window.location.href = "UserOrAdmin.html"
+    }
+        
+    
+
+    printMenuAdmin()
+    
+
+</script>
+</html>

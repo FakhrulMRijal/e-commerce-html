@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+  body {
+    background-color: #00A4CCFF;
+    color :white;
+    font-family: Roboto;
+    border-collapse: collapse;
+    
+    } 
+    table, th, td {
+        background-color: coral;
+        border : 5px solid #00A4CCFF;
+        text-align: center;
+        
+        
+    }
+
+   button {
+    background-color: #f2bc94;
+    color:#143d59;
+    margin-bottom: 15px;
+    width : 150px;
+    height: 25px;
+    }
+</style>
+</head>
+<body>
+
+    <center>
+      <h3>Furniture List:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Image</td>
+                    <td>Price</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody id="menu">
+
+            </tbody>
+        </table>
+        <h3>Your Cart: </h3>
+        <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Image</td>
+                    <td>Price</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody id="cart">
+
+            </tbody>
+            <div id = "result">
+            <button value='Check Out' onclick="calTotal()" >Total</button>
+            </div>
+        </table>
+    </center>
+    <center>
+        <button value="Log Out" onclick="logOut()">Log Out</button>
+    </center>
+    <!-- <select id="option">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="vw">VW</option>
+        <option value="audi" selected>Audi</option>
+    </select> -->
+</body>
+
+<script>
+    // function optionSelect(){
+    //     var option = document.getElementById('option').value;
+    // }
+    
+    class Product{
+        constructor(name, image, price){
+            this.name = name,
+            this.image = image,
+            this.price = price
+        }
+    }
+    var menu = [
+         new Product('table', 'https://i.pinimg.com/564x/6f/74/b9/6f74b98048b9980d4403faff47cf20ce.jpg', 2500000),
+         new Product('chair', 'https://i.pinimg.com/564x/fa/98/25/fa98255931681887d9194cc68d8fc00d.jpg', 2000000),
+         new Product('sofa', 'https://i.pinimg.com/564x/63/66/37/636637031868114d965a5b203e0317af.jpg', 3000000)
+    ]
+
+    
+
+    var cart = []
+
+    
+
+    function printMenuUser(){
+        var output = ''
+        for(var i = 0 ; i< menu.length ; i++){
+            output += 
+            `
+            <tr>
+                <td>${i +1}</td>
+                <td>${menu[i].name}</td>
+                <td><img src=${menu[i].image} alt=${menu[i].name} width="100px"></td>
+                <td>Rp.${menu[i].price.toLocaleString()}</td>
+                <td>   
+                    <button value="Add to Cart" onclick="addToCart(${i})">Add To Cart</button>  
+                </td>
+            </tr>
+            `
+
+        }
+        return document.getElementById('menu').innerHTML = output 
+    }
+
+    function printCart(){
+        var output = ''
+        for(var i = 0 ; i< cart.length ; i++){
+            output += 
+            `
+            <tr>
+                <td>${i +1}</td>
+                <td>${cart[i].name}</td>
+                <td><img src=${cart[i].image} alt=${cart[i].name} width="100px"></td>
+                <td>Rp.${cart[i].price.toLocaleString()}</td>
+                <td>
+                    <button onclick="cancelCart(${i})">Cancel</button>  
+                </td>
+            </tr>
+            `
+        }
+        return document.getElementById('cart').innerHTML = output
+    }
+
+    function addToCart(index){
+        cart.push(menu[index])
+        printCart()
+    }
+
+    function cancelCart(index){
+        cart.splice(index, 1)
+        printCart()
+    }
+
+    function calTotal(){
+                var total = 0
+                for(var i = 0; i < cart.length; i++){
+                    total += cart[i].price
+                }
+                document.getElementById("result").innerHTML = 'Total Buy Rp.' + total.toLocaleString() + ' ThankYou'
+                cart = [];
+                printCart()
+            }
+
+    function logOut(){
+      localStorage.removeItem('account');
+      window.location.href = "UserOrAdmin.html"
+    }
+
+    printMenuUser()
+
+    </script>

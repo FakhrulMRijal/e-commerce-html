@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  body {
+        background-color: #00A4CCFF;
+        color :white;
+        font-family: Roboto;
+        
+    }
+  input {
+  background-color: #f2bc94;
+  color:#143d59;
+  margin-bottom: 15px;
+  width : 150px;
+  height: 25px;
+    }  
+</style>
+
+<body>
+ <center> 
+<div>
+  <h3>Login</h3>
+  <p>Username:</p>
+  <br>
+  <input type="text" id="uname" name="username" placeHolder="Please Input your username" value=""> 
+  <br>
+  <p>Password:</p>
+  <input type="password" id="pwd" name="password" placeholder="Please Input Your password" value="">
+  <br>
+  <input type="button" value="submit" onclick="loginSubmit()">
+</div>
+</body>
+</center>
+
+<script>
+  var user = []
+  var uname = document.getElementById("uname")
+  var pwd = document.getElementById("pwd")
+  var data = JSON.parse(localStorage.getItem('accounts'))
+
+  function loginSubmit() {
+    if (data != null && data.length > 0) {
+      for (i = 0; i < data.length; i++) {
+        if (data[i].username === uname.value && data[i].password === pwd.value) {
+          var account = {
+            username: uname.value,
+            password: pwd.value
+          }
+          var storeAccount = localStorage.setItem('account', JSON.stringify(data))
+          window.location.href = "PrintForUser.html"
+        } else {
+          alert('Sorry your username or password is invalid')
+          //        window.location.href = "Login.html"
+        }
+      }
+    } else {
+      alert('Success')
+    }
+
+  }
+</script>
+
+</html>
